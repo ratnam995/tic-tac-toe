@@ -1,7 +1,4 @@
 import { Component } from "@angular/core";
-import { Router, ActivatedRoute, Params } from "@angular/router";
-
-import { PubNubAngular } from "pubnub-angular2";
 
 @Component({
   selector: "app-root",
@@ -10,5 +7,4 @@ import { PubNubAngular } from "pubnub-angular2";
 })
 export class AppComponent {
   title = "app";
-
 }

@@ -1,13 +1,19 @@
 <div id="gameBoardDiv">
-  <div *ngIf="host" class="row" style="width:700px; height: 30px;">
-    <div [ngClass]="{'disable-div': gameOver}" class="col-sm-10">
+  <div class="row" style="width:1000px; height: 30px;">
+    <div *ngIf="host" [ngClass]="{'disable-div': gameOver}" class="col-sm-8">
       Share this url with opponent: <a target="_blank" href="{{opponentUrl}}">{{opponentUrl}}</a>
     </div>
-    <div class="col-sm-2">
+    <div *ngIf="host"class="col-sm-2" [ngClass]="{'disable-div': !gameStart}">
       <button (click)="onStartNewGameClick()">New Game</button>
     </div>
+    <div *ngIf="host" class="col-sm-2">
+      You are X
+    </div>
+    <div *ngIf="!host" class="col-sm-2">
+      You are O
+    </div>
   </div>
-  <div [ngClass]="{'disable-div': gameOver}" style="width:300px; height: 300px;">
+  <div [ngClass]="{'disable-div': gameOver || !gameStart}" style="width:300px; height: 300px;">
     <div class="row" style="height: 100px">
       <div id="position11" (click)="host? onPositionClickByHost('11'): onPositionClickByOther('11')" class="col-sm-4 div-border-right"></div>
       <div id="position12" (click)="host? onPositionClickByHost('12'): onPositionClickByOther('12')" class="col-sm-4 div-border-right"></div>

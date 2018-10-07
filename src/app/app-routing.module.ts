@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
-import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { TicTacToeComponent } from "./tic-tac-toe/tic-tac-toe.component";
 
 const routes: Routes = [
   {
@@ -10,13 +9,13 @@ const routes: Routes = [
     redirectTo: "tic-tac-toe/null"
   },
   {
-    path:"tic-tac-toe/:playerId",
+    path: "tic-tac-toe/:playerId",
     component: TicTacToeComponent
-  },
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

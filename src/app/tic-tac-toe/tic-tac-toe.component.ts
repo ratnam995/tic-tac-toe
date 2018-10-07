@@ -14,7 +14,7 @@ export class TicTacToeComponent implements OnInit {
   hostWon: boolean = false;
   otherWon: boolean = false;
   gameOver: boolean = false;
-  // hanceHistory:any[]=[];
+  gameStart: boolean = false;
   chanceHistory: any[] = [];
   opponentUrl = "";
   constructor(
@@ -50,6 +50,8 @@ export class TicTacToeComponent implements OnInit {
               this.onMessageReceive(response);
             }
           });
+          this.disableGameBoard();
+          this.sendAcknowledgement();
         } else {
           this.host = true;
           this.chanceHistory = [];
@@ -79,25 +81,49 @@ export class TicTacToeComponent implements OnInit {
     });
   }
 
-  onMessageReceive(response) {
-    this.chanceHistory.push(response.message);
-    let positionDiv = document.getElementById(
-      "position" + response.message.position
+  sendAcknowledgement() {
+    this.pubnub2.getInstance("another").publish(
+      {
+        message: { startGame: true },
+        channel: "Channel-6lq5h0iu2"
+      },
+      (status, response) => {
+        if (status.error) {
+          console.log("Error while publishing", status.error);
+        } else {
+          console.log("message Published w/ timetoken", response.timetoken);
+        }
+      }
     );
-    let iElement = document.createElement("i");
-    switch (response.message.player) {
-      case "host":
-        iElement.setAttribute("class", "fa fa-times fa-5x");
-        if (!this.host) this.enableGameBoard();
-        break;
-      case "other":
-        iElement.setAttribute("class", "fa fa-circle-o fa-5x");
-        if (this.host) this.enableGameBoard();
-        break;
+  }
+
+  onMessageReceive(response) {
+    if (response.message.hasOwnProperty("startGame") && response.message.startGame) {
+      alert("Game is started. Chance is of X");
+      this.gameStart = true;
+      this.gameOver = false;
+      this.hostWon = false;
+      this.otherWon = false;
+    } else {
+      this.chanceHistory.push(response.message);
+      let positionDiv = document.getElementById(
+        "position" + response.message.position
+      );
+      let iElement = document.createElement("i");
+      switch (response.message.player) {
+        case "host":
+          iElement.setAttribute("class", "fa fa-times fa-5x");
+          if (!this.host) this.enableGameBoard();
+          break;
+        case "other":
+          iElement.setAttribute("class", "fa fa-circle-o fa-5x");
+          if (this.host) this.enableGameBoard();
+          break;
+      }
+      positionDiv.appendChild(iElement);
+      positionDiv.classList.add("disable-div");
+      this.checkWinner();
     }
-    positionDiv.appendChild(iElement);
-    positionDiv.classList.add("disable-div");
-    this.checkWinner();
   }
 
   enableGameBoard() {
@@ -222,7 +248,7 @@ export class TicTacToeComponent implements OnInit {
     );
   }
 
-  onStartNewGameClick(){
-    
+  onStartNewGameClick() {
+    location.reload();
   }
 }
