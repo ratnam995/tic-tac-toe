@@ -1,0 +1,27 @@
+<div id="gameBoardDiv">
+  <div *ngIf="host" class="row" style="width:700px; height: 30px;">
+    <div [ngClass]="{'disable-div': gameOver}" class="col-sm-10">
+      Share this url with opponent: <a target="_blank" href="{{opponentUrl}}">{{opponentUrl}}</a>
+    </div>
+    <div class="col-sm-2">
+      <button (click)="onStartNewGameClick()">New Game</button>
+    </div>
+  </div>
+  <div [ngClass]="{'disable-div': gameOver}" style="width:300px; height: 300px;">
+    <div class="row" style="height: 100px">
+      <div id="position11" (click)="host? onPositionClickByHost('11'): onPositionClickByOther('11')" class="col-sm-4 div-border-right"></div>
+      <div id="position12" (click)="host? onPositionClickByHost('12'): onPositionClickByOther('12')" class="col-sm-4 div-border-right"></div>
+      <div id="position13" (click)="host? onPositionClickByHost('13'): onPositionClickByOther('13')" class="col-sm-4"></div>
+    </div>
+    <div class="row" style="height: 100px">
+      <div id="position21" (click)="host? onPositionClickByHost('21'): onPositionClickByOther('21')" class="col-sm-4 div-border-right div-border-top"></div>
+      <div id="position22" (click)="host? onPositionClickByHost('22'): onPositionClickByOther('22')" class="col-sm-4 div-border-right div-border-top"></div>
+      <div id="position23" (click)="host? onPositionClickByHost('23'): onPositionClickByOther('23')" class="col-sm-4 div-border-top"></div>
+    </div>
+    <div class="row" style="height: 100px">
+      <div id="position31" (click)="host? onPositionClickByHost('31'): onPositionClickByOther('31')" class="col-sm-4 div-border-right div-border-top"></div>
+      <div id="position32" (click)="host? onPositionClickByHost('32'): onPositionClickByOther('32')" class="col-sm-4 div-border-right div-border-top"></div>
+      <div id="position33" (click)="host? onPositionClickByHost('33'): onPositionClickByOther('33')" class="col-sm-4 div-border-top"></div>
+    </div>
+  </div>
+</div>
